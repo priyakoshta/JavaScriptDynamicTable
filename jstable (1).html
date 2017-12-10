@@ -74,8 +74,16 @@ tabn=document.getElementById("tab1");
 
 function showFirst()
 {
+span=parseInt(document.getElementById("spanText").value);
 beg=0;
+if(span>40)
+{
+document.getElementById("spanText").value=40;
+end=40;
+}
+else
 end=beg+span;
+tbbody=document.getElementsByTagName("tbody");
 tbbody=document.getElementsByTagName("tbody");
 tabn.removeChild(tbbody[0]);
 tbbody= document.createElement("tbody");
@@ -97,6 +105,12 @@ for(i=beg;i<end;i++)
 function showLast()
 {
 end=40;
+if(span>40)
+{
+beg=0;
+document.getElementById("spanText").value=40;
+}
+else
 beg=end-span;
 tbbody=document.getElementsByTagName("tbody");
 tabn.removeChild(tbbody[0]);
@@ -121,7 +135,13 @@ function prevPage()
 if(beg==0||end==span)
 return;
 beg=beg-span;
-end=end-span;
+if(beg<0)
+{
+	beg=0
+	end=span
+}
+else
+	end=end-span;
 tbbody=document.getElementsByTagName("tbody");
 tabn.removeChild(tbbody[0]);
 tbbody= document.createElement("tbody");
@@ -187,26 +207,12 @@ end=end-1 ;
 function downRow()
 {
 if(end==40)
-return;
-beg=beg+1;
-tbbody=document.getElementsByTagName("tbody");
-tbbody[0].removeChild(tbbody[0].childNodes[0]);
-row = document.createElement("tr");
-for(j=0;j<5;j++)
-{	
- rd =document.createElement("td");
- row.appendChild(rd);   
- node = document.createTextNode(dataSet[end][j]);
- rd.appendChild(node);
-}
-tbbody[0].appendChild(row);
-end=end+1;
-}
-
-function changeSpan()
+	beg=end-span;
+else
 {
-span=document.getElementById("spanText").value;
+beg=beg+1;
 end=beg+span;
+}
 tbbody=document.getElementsByTagName("tbody");
 tabn.removeChild(tbbody[0]);
 tbbody= document.createElement("tbody");
@@ -216,6 +222,37 @@ for(i=beg;i<end;i++)
    row = document.createElement("tr");
    for(j=0;j<5;j++)
    {	
+       rd =document.createElement("td");
+       row.appendChild(rd); 
+       node = document.createTextNode(dataSet[i][j]);
+       rd.appendChild(node);
+   }
+ tbbody.appendChild(row);  
+}
+}
+
+function changeSpan()
+{
+span=parseInt(document.getElementById("spanText").value);
+if(span>40)
+{
+beg=0
+end=40
+document.getElementById("spanText").value=40;
+}
+else if(end==40)
+	beg=end-span;
+else
+end=beg+span;
+tbbody=document.getElementsByTagName("tbody");
+tabn.removeChild(tbbody[0]);
+tbbody= document.createElement("tbody");
+tabn.appendChild(tbbody);
+for(i=beg;i<end;i++)
+{
+   row = document.createElement("tr");
+   for(j=0;j<5;j++)
+   {
        rd =document.createElement("td");
        row.appendChild(rd); 
        node = document.createTextNode(dataSet[i][j]);
