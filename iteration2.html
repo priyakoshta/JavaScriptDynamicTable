@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<body onload=showFirst()>
+<p id="demo">
+<button type="button" onClick=showFirst()>|<</button>
+<button type="button" onClick=prevPage()><<</button>
+<button type="button" onClick=upRow()><</button>
+Showing
+<input id="spanText" type="text" value="10" onchange=changeSpan() />
+      rows out of
+<input type="text" value="400" disabled="true"/>
+      starting at row
+<input type="text" value="1" onchange=/>
+<button type="button" onClick=downRow()>></button>
+<button type="button" onClick=nextPage()>>></button>
+<button type="button" onClick=showLast()>>|</button>
+<table id="tab1" style="width:100%" border="1">
+  <thead>
+    <th/>
+    <th>Locn_Nbr</th>
+    <th>Online_Ord_Id</th> 
+    <th>KSN_Id</th>
+    <th>SKU_Prc_Type_Cd</th>
+  </thead>
+  <tbody/>
+</table></p>
+
+<script>
+var dataSet = [
+    [ "1", "74034", "0", "0", "0" ],
+    [ "2", "71534", "0", "0", "0" ],
+    [ "3", "76934", "0", "0", "0" ],
+    [ "4", "70534", "0", "0", "0" ],
+    [ "5", "70934", "0", "0", "0" ],
+    [ "6", "70434", "0", "0", "0" ],
+    [ "7", "70384", "0", "0", "0" ],
+    [ "8", "70374", "0", "0", "0" ],
+    [ "9", "70534", "0", "0", "0" ],
+    [ "10", "70234", "0", "0", "0" ],
+    [ "11", "70834", "0", "0", "0" ],
+    [ "12", "70364", "0", "0", "0" ],
+    [ "13", "70647", "0", "0", "0" ],
+    [ "14", "70334", "0", "0", "0" ],
+    [ "15", "70634", "0", "0", "0" ],
+    [ "16", "70434", "0", "0", "0" ],
+    [ "17", "70234", "0", "0", "0" ],
+    [ "18", "70324", "0", "0", "0" ],
+    [ "19", "70434", "0", "0", "0" ],
+    [ "20", "70324", "0", "0", "0" ],
+    [ "21", "70234", "0", "0", "0" ],
+    [ "22", "71324", "0", "0", "0" ],
+    [ "23", "76344", "0", "0", "0" ],
+    [ "24", "70234", "0", "0", "0" ],
+    [ "25", "74034", "0", "0", "0" ],
+    [ "26", "70314", "0", "0", "0" ],
+    [ "27", "70394", "0", "0", "0" ],
+    [ "28", "70934", "0", "0", "0" ],
+    [ "29", "70334", "0", "0", "0" ],
+    [ "30", "70334", "0", "0", "0" ],
+    [ "31", "70354", "0", "0", "0" ],
+    [ "32", "70334", "0", "0", "0" ],
+    [ "33", "70534", "0", "0", "0" ],
+    [ "34", "70389", "0", "0", "0" ],
+    [ "35", "70643", "0", "0", "0" ],
+    [ "36", "70345", "0", "0", "0" ],
+    [ "37", "70223", "0", "0", "0" ],
+    [ "38", "70234", "0", "0", "0" ],
+    [ "39", "72303", "0", "0", "0" ],
+    [ "40", "73434", "0", "0", "0" ],
+];
+var row,rd,node,tabn,tbbody,i,j;
+var beg=0,end=10,span=10;
+tabn=document.getElementById("tab1");
+
+function showFirst()
+{
+span=parseInt(document.getElementById("spanText").value);
+beg=0;
+if(span>40)
+{
+document.getElementById("spanText").value=40;
+end=40;
+}
+else
+end=beg+span;
+tbbody=document.getElementsByTagName("tbody");
+tbbody=document.getElementsByTagName("tbody");
+tabn.removeChild(tbbody[0]);
+tbbody= document.createElement("tbody");
+tabn.appendChild(tbbody);
+for(i=beg;i<end;i++)
+{
+   row = document.createElement("tr");
+   for(j=0;j<5;j++)
+   {	
+       rd =document.createElement("td");
+       row.appendChild(rd); 
+       node = document.createTextNode(dataSet[i][j]);
+       rd.appendChild(node);
+   }
+ tbbody.appendChild(row);  
+}
+}
+
+function showLast()
+{
+end=40;
+if(span>40)
+{
+beg=0;
+document.getElementById("spanText").value=40;
+}
+else
+beg=end-span;
+tbbody=document.getElementsByTagName("tbody");
+tabn.removeChild(tbbody[0]);
+tbbody= document.createElement("tbody");
+tabn.appendChild(tbbody);
+for(i=beg;i<end;i++)
+{
+   row = document.createElement("tr");
+   for(j=0;j<5;j++)
+   {	
+       rd =document.createElement("td");
+       row.appendChild(rd); 
+       node = document.createTextNode(dataSet[i][j]);
+       rd.appendChild(node);
+   }
+ tbbody.appendChild(row);  
+}
+}
+
+function prevPage()
+{
+if(beg==0||end==span)
+return;
+beg=beg-span;
+if(beg<0)
+{
+	beg=0
+	end=span
+}
+else
+	end=end-span;
+tbbody=document.getElementsByTagName("tbody");
+tabn.removeChild(tbbody[0]);
+tbbody= document.createElement("tbody");
+tabn.appendChild(tbbody);
+for(i=beg;i<end;i++)
+{
+   row = document.createElement("tr");
+   for(j=0;j<5;j++)
+   {	
+       rd =document.createElement("td");
+       row.appendChild(rd); 
+       node = document.createTextNode(dataSet[i][j]);
+       rd.appendChild(node);
+   }
+ tbbody.appendChild(row);  
+}
+}
+
+function nextPage()
+{
+if(end==40||(end+span)>=40)
+{
+end=40;
+beg=40-span;
+}
+else
+{
+beg=beg+span;
+end=end+span;
+}
+tbbody=document.getElementsByTagName("tbody");
+tabn.removeChild(tbbody[0]);
+tbbody= document.createElement("tbody");
+tabn.appendChild(tbbody);
+for(i=beg;i<end;i++)
+{
+   row = document.createElement("tr");
+   for(j=0;j<5;j++)
+   {	
+       rd =document.createElement("td");
+       row.appendChild(rd); 
+       node = document.createTextNode(dataSet[i][j]);
+       rd.appendChild(node);
+   }
+ tbbody.appendChild(row);  
+}
+}
+
+function upRow()
+{
+beg=beg-1;
+if(beg<0)
+return;
+tbbody=document.getElementsByTagName("tbody");
+var leng=tbbody[0].childNodes.length;
+tbbody[0].removeChild(tbbody[0].childNodes[leng-1]);
+row = document.createElement("tr");
+for(j=0;j<5;j++)
+{	
+ rd =document.createElement("td");
+ row.appendChild(rd);   
+ node = document.createTextNode(dataSet[beg][j]);
+ rd.appendChild(node);
+}
+tbbody[0].insertBefore(row, tbbody[0].childNodes[0]); 
+end=end-1 ;
+}
+
+function downRow()
+{
+if(end==40)
+	beg=end-span;
+else
+{
+beg=beg+1;
+end=beg+span;
+}
+tbbody=document.getElementsByTagName("tbody");
+tabn.removeChild(tbbody[0]);
+tbbody= document.createElement("tbody");
+tabn.appendChild(tbbody);
+for(i=beg;i<end;i++)
+{
+   row = document.createElement("tr");
+   for(j=0;j<5;j++)
+   {	
+       rd =document.createElement("td");
+       row.appendChild(rd); 
+       node = document.createTextNode(dataSet[i][j]);
+       rd.appendChild(node);
+   }
+ tbbody.appendChild(row);  
+}
+}
+
+function changeSpan()
+{
+span=parseInt(document.getElementById("spanText").value);
+if(span>40)
+{
+beg=0
+end=40
+document.getElementById("spanText").value=40;
+}
+else if(end==40)
+	beg=end-span;
+else
+end=beg+span;
+tbbody=document.getElementsByTagName("tbody");
+tabn.removeChild(tbbody[0]);
+tbbody= document.createElement("tbody");
+tabn.appendChild(tbbody);
+for(i=beg;i<end;i++)
+{
+   row = document.createElement("tr");
+   for(j=0;j<5;j++)
+   {
+       rd =document.createElement("td");
+       row.appendChild(rd); 
+       node = document.createTextNode(dataSet[i][j]);
+       rd.appendChild(node);
+   }
+ tbbody.appendChild(row);  
+}
+}
+
+</script>
+</body>
+</html>
+
+
