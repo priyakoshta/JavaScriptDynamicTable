@@ -162,10 +162,16 @@ for(i=beg;i<end;i++)
 
 function nextPage()
 {
-if(beg==(40-span)||end==40)
-return;
+if(end==40||(end+span)>=40)
+{
+end=40;
+beg=40-span;
+}
+else
+{
 beg=beg+span;
 end=end+span;
+}
 tbbody=document.getElementsByTagName("tbody");
 tabn.removeChild(tbbody[0]);
 tbbody= document.createElement("tbody");
